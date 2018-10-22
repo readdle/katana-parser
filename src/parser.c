@@ -1268,8 +1268,9 @@ void katanaerror(YYLTYPE* yyloc, void* scanner, struct KatanaInternalParser * pa
     e->first_column = yyloc->first_column;
     e->last_line = yyloc->last_line;
     e->last_column = yyloc->last_column;
-    snprintf(e->message, KATANA_ERROR_MESSAGE_SIZE, "%s at %s", error,
-             katanaget_text(parser->scanner));
+//    snprintf(e->message, KATANA_ERROR_MESSAGE_SIZE, "%s at %s", error,
+//             katanaget_text(parser->scanner));
+    snprintf(e->message, KATANA_ERROR_MESSAGE_SIZE, "%s at %i:%i - %i:%i", error, yyloc->first_line, yyloc->first_column, yyloc->last_line, yyloc->last_column);
     katana_array_add(parser, e, &(parser->output->errors));
 }
 
