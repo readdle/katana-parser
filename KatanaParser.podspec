@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "KatanaParser"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "Katana - A pure-C CSS parser."
   s.description  = <<-DESC
                   Katana is an implementation of the CSS (Cascading Style Sheet) parsing algorithm implemented as a pure C library with no outside dependencies.
