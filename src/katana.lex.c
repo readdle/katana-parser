@@ -3331,6 +3331,8 @@ YY_BUFFER_STATE katana_scan_buffer  (char * base, yy_size_t  size , yyscan_t yys
 	b->yy_at_bol = 1;
 	b->yy_fill_buffer = 0;
 	b->yy_buffer_status = YY_BUFFER_NEW;
+  b->yy_bs_lineno = 0;
+  b->yy_bs_column = 0;
 
 	katana_switch_to_buffer(b ,yyscanner );
 
