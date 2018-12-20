@@ -2590,8 +2590,7 @@ yyreduce:
   case 98:
 
     {
-        // Stub rule to avoid exception when rule will be dereferenced.
-        (yyval.rule) = katana_new_style_rule(parser, katana_new_array(parser));
+        (yyval.rule) = 0;
         // $$ = parser->createSupportsRule($4, $9);
     }
 
