@@ -1236,8 +1236,11 @@ bool katana_string_is_function(KatanaParserString* string)
 void katana_string_clear(KatanaParser* parser, KatanaParserString* string)
 {
 	printf("==%s==\n", string->data);
-    katana_parser_deallocate(parser, (void*) string->data);
-    katana_parser_deallocate(parser, (void*) string);
+    if (string->data) {
+        // string object is not valie if string->data is not set
+        katana_parser_deallocate(parser, (void*) string->data);
+        katana_parser_deallocate(parser, (void*) string);        
+    }
 }
 
 
