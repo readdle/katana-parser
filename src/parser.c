@@ -68,6 +68,7 @@ void katana_destroy_rare_data(KatanaParser* parser, KatanaSelectorRareData* e);
 void katana_destroy_declaration(KatanaParser* parser, KatanaDeclaration* e);
 void katana_destroy_value(KatanaParser* parser, KatanaValue* e);
 void katana_destroy_function(KatanaParser* parser, KatanaValueFunction* e);
+void katana_destroy_error(KatanaParser* parser, KatanaError* e);
 
 void katana_destroy_array_using_deallocator(KatanaParser* parser,
                           KatanaArrayDeallocator deallocator, KatanaArray* array);
@@ -168,7 +169,7 @@ void katana_destroy_output(KatanaOutput* output)
             break;
     }
     katana_destroy_stylesheet(&parser, output->stylesheet);
-    katana_array_destroy(&parser, &output->errors);
+    katana_destroy_array(&parser, katana_destroy_error, &output->errors);
     katana_parser_deallocate(&parser, output);
 }
 
@@ -1036,6 +1037,13 @@ void katana_destroy_selector(KatanaParser* parser, KatanaSelector* e)
     }
 }
 
+void katana_destroy_error(KatanaParser* parser, KatanaError* e)
+{
+    if ( e ) {
+        katana_parser_deallocate(parser, (void*) e);
+    }
+}
+
 KatanaSelector* katana_rewrite_specifier_with_element_name(KatanaParser* parser, KatanaParserString* tag, KatanaSelector* specifier)
 {
     // TODO: (@QFish) check if css3 support
@@ -1236,8 +1244,7 @@ bool katana_string_is_function(KatanaParserString* string)
 void katana_string_clear(KatanaParser* parser, KatanaParserString* string)
 {
 	printf("==%s==\n", string->data);
-    if (string->data) {
-        // string object is not valie if string->data is not set
+    if (string->data && string->capacity > 0) {
         katana_parser_deallocate(parser, (void*) string->data);
         katana_parser_deallocate(parser, (void*) string);        
     }
