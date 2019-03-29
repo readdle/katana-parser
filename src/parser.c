@@ -1633,9 +1633,12 @@ static const char* katana_stringify_value_list(KatanaParser* parser, KatanaArray
     for (size_t i = 0; i < values->length; ++i) {
         KatanaValue* value = values->data[i];
         const char* value_str = katana_stringify_value(parser, value);
-        katana_string_append_characters(parser, value_str, buffer);
-        katana_parser_deallocate(parser, (void*) value_str);
-        value_str = NULL;
+        if (value_str) {
+            // value_string can be NULL, if value is empty KATANA_VALUE_PARSER_LIST
+            katana_string_append_characters(parser, value_str, buffer);
+            katana_parser_deallocate(parser, (void*) value_str);
+            value_str = NULL;
+        }
         if ( i < values->length - 1 ) {
             if ( value->unit != KATANA_VALUE_PARSER_OPERATOR ) {
                 if ( i < values->length - 2 ) {
